@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Publish Test • Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: "#eff6ff",
+              100: "#dbeafe",
+              500: "#3b82f6",
+              600: "#2563eb",
+              700: "#1d4ed8",
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Icons (Heroicons) -->
+  <script src="https://unpkg.com/@heroicons/vue@2.0.18/outline/index.js"></script>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+    body {
+      font-family: "Inter", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <div class="flex h-screen">
+    <!-- Sidebar -->
+    <div class="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
+      <div class="flex flex-col flex-grow bg-gray-900 overflow-y-auto">
+        <div class="flex items-center justify-center h-16 flex-shrink-0 px-4 bg-gray-800">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <span class="ml-2 text-white font-semibold text-lg">Admin Panel</span>
+          </div>
+        </div>
+        <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
+          <nav class="mt-5 flex-1 px-4 space-y-1">
+            <a href="/admin" class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+              <svg class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+              </svg>
+              Test Settings
+            </a>
+            <a href="/admin/questions" class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+              <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              Manage Questions
+            </a>
+            <a href="/admin/publish" class="bg-gray-800 text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+              <svg class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+              </svg>
+              Publish Test
+            </a>
+            <a href="/admin/results" class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+              <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              </svg>
+              View Results
+            </a>
+            <a href="/logout" class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+              <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+              </svg>
+              Logout
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="lg:pl-64 flex flex-col flex-1">
+      <!-- Top Navigation -->
+      <div class="relative z-10 flex-shrink-0 flex h-16 bg-white border-b border-gray-200 lg:border-none">
+        <button class="px-4 border-r border-gray-200 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 lg:hidden" id="mobile-menu-button">
+          <span class="sr-only">Open sidebar</span>
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+        <div class="flex-1 px-4 flex justify-between items-center sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
+          <!-- Page Title -->
+          <div class="flex items-center">
+            <h1 class="text-xl font-bold text-gray-900 sm:text-2xl">
+              <svg class="inline w-6 h-6 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+              </svg>
+              Publish Test
+            </h1>
+          </div>
+
+          <!-- User Avatar -->
+          <div class="ml-4 flex items-center md:ml-6">
+            <div class="ml-3 relative">
+              <div>
+                <button type="button" th:title="${adminName}" class="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                  <span class="sr-only">Open user menu</span>
+                  <div class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium" th:text="${#strings.substring(adminName, 0, 1)}"></div>
+                  <div class="ml-2 text-gray-800 font-medium" th:text="${adminName}">Admin Name</div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content Area -->
+      <main class="flex-1 pb-8">
+        <div class="mt-8">
+          <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Success Alert -->
+            <div th:if="${success}" class="rounded-md bg-green-50 p-4 mb-6">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <p class="text-sm font-medium text-green-800" th:text="${success}"></p>
+                </div>
+                <div class="ml-auto pl-3">
+                  <div class="-mx-1.5 -my-1.5">
+                    <button type="button" class="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600">
+                      <span class="sr-only">Dismiss</span>
+                      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Publish Card -->
+            <div class="bg-white shadow rounded-lg overflow-hidden">
+              <div class="px-6 py-8">
+                <div th:if="${config != null}">
+                  <!-- Test Information -->
+                  <div class="mb-6">
+                    <h2 class="text-xl font-bold text-gray-900 mb-4">Test Publication Status</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                      <div class="bg-gray-50 rounded-lg p-4">
+                        <h3 class="text-sm font-medium text-gray-500 mb-1">Test Name</h3>
+                        <p class="text-lg font-semibold text-gray-900" th:text="${config.testName}">Sample Test</p>
+                      </div>
+                      
+                      <div class="bg-gray-50 rounded-lg p-4">
+                        <h3 class="text-sm font-medium text-gray-500 mb-1">Status</h3>
+                        <div class="flex items-center">
+                          <span th:if="${config.published}" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            <svg class="mr-1 h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Published
+                          </span>
+                          <span th:unless="${config.published}" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                            <svg class="mr-1 h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Draft
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Publish Button for Unpublished Tests -->
+                    <div th:if="${!config.published}" class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                      <h3 class="text-lg font-medium text-blue-800 mb-2">Ready to Publish?</h3>
+                      <p class="text-blue-700 mb-4">Once published, your test will be available to candidates using the shareable link.</p>
+                      <a th:href="@{'/admin/publish/' + ${config.id}}" 
+                         class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                        </svg>
+                        Publish Now
+                      </a>
+                    </div>
+
+                    <!-- Share Link for Published Tests -->
+                    <div th:if="${config.published}" class="mt-6 p-4 bg-green-50 rounded-lg border border-green-200">
+                      <h3 class="text-lg font-medium text-green-800 mb-2">Test Published Successfully!</h3>
+                      <p class="text-green-700 mb-3">Share this link with candidates to start the test:</p>
+                      <div class="flex items-center space-x-2">
+                        <input type="text" 
+                               th:value="@{'/start-test?slug=' + ${config.slug}}"
+                               readonly
+                               class="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <button onclick="copyTestLink()" 
+                                class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                          <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                          </svg>
+                          Copy
+                        </button>
+                      </div>
+                      <p class="text-sm text-green-600 mt-2">Click the link to preview: 
+                        <a th:href="@{'/start-test?slug=' + ${config.slug}}"
+                           th:text="@{'/start-test?slug=' + ${config.slug}}"
+                           class="underline hover:text-green-800" target="_blank"></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- No Configuration Message -->
+                <div th:unless="${config != null}" class="text-center py-8">
+                  <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                  </svg>
+                  <h3 class="mt-2 text-sm font-medium text-gray-900">No test configuration found</h3>
+                  <p class="mt-1 text-sm text-gray-500">Please set up your test settings first.</p>
+                  <div class="mt-6">
+                    <a href="/admin" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                      <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+                      </svg>
+                      Configure Test Settings
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Mobile menu script -->
+  <script>
+    document.getElementById("mobile-menu-button").addEventListener("click", function () {
+      document.getElementById("mobile-sidebar").style.display = "flex";
+    });
+
+    document.querySelector("#mobile-sidebar .bg-gray-600").addEventListener("click", function () {
+      document.getElementById("mobile-sidebar").style.display = "none";
+    });
+
+    document.querySelector("#mobile-sidebar button").addEventListener("click", function () {
+      document.getElementById("mobile-sidebar").style.display = "none";
+    });
+
+    // Copy test link function
+    function copyTestLink() {
+      const linkInput = document.querySelector('input[readonly]');
+      linkInput.select();
+      document.execCommand('copy');
+      
+      // Show temporary feedback
+      const button = event.target.closest('button');
+      const originalText = button.innerHTML;
+      button.innerHTML = `
+        <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        Copied!
+      `;
+      
+      setTimeout(() => {
+        button.innerHTML = originalText;
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
