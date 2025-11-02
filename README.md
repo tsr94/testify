@@ -17,7 +17,7 @@ It allows **admins** to generate tests manually or automatically using the **Gem
 |--------|-------------|
 | Backend | **Spring Boot (Java)** |
 | Frontend | **Thymeleaf, TailwindCSS** |
-| Database | **Postgres |
+| Database | **Postgres**|
 | AI Integration | **Gemini API (Google Generative AI)** |
 | Build Tool | **Maven** |
 | Security | **Spring Security (optional login/roles)** |
